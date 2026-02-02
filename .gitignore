@@ -1,10 +1,10 @@
-lib/
-*/bin/
+**/lib/
+**/bin/
 .DS_Store
 *.log
 *.sqlite3
 *.pot
 *.pyc
-*/__pycache__/
+**/__pycache__/
 local_settings.py
 .env
