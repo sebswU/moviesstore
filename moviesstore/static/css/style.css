@@ -39,6 +39,6 @@
 }
 
 .img-card-400 {
-  width: fit-content;
+  object-fit: cover;
   max-height: 400px;
 }

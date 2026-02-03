@@ -1,5 +1,5 @@
 **/lib/
-/bin/
+**/bin/
 env/
 .DS_Store
 *.log

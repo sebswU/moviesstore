@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Movie, Review
+from .models import Movie, Review, Report
 from django.contrib.auth.decorators import login_required
 
 
@@ -59,3 +59,24 @@ def delete_review(request, id, review_id):
     review = get_object_or_404(Review, id=review_id, user=request.user)
     review.delete()
     return redirect('movies.show', id=id)
+
+@login_required
+def report_review(request, id, review_id):
+    if request.method == 'GET':
+        template_data = {}
+        template_data['title'] = 'Report Review'
+        template_data['reason'] = ''
+        template_data['movie'] = Movie.objects.get(id=id)
+        template_data['review'] = get_object_or_404(Review, id=review_id)
+        return render(request, 'movies/report_review.html', {'template_data': template_data})
+    elif request.method == 'POST' and request.POST['reason'] != '':
+        review = get_object_or_404(Review, id=review_id)
+        report = Report()
+        review.isFlagged = True
+        report.review = review
+        report.reason = request.POST['reason']
+        report.save()
+        review.save()
+        return redirect('movies.show', id=id)
+    else:
+        return redirect('movies.show', id=id)
